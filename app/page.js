@@ -27,17 +27,13 @@ export default function Home() {
       setage(await response1.json());
       setgender(await response2.json());
       setcountries(await response3.json());
-      setisLoading(false)
-      // const data1 = await response1.json();
-      // const data2 = await response2.json();
-      // const data3 = await response3.json();
-      // console.log( data1?.error);
-      // setage(data1);
-      // setgender(data2);
-      // setcountries(data3);
+      
+      
 
     } catch (error) {
       console.log('Error fetching data:', error);
+    }finally{
+      setisLoading(false)
     }
 
   }
