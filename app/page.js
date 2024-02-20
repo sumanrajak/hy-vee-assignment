@@ -7,15 +7,18 @@ import { useState } from "react";
 export default function Home() {
   const [name, setname] = useState('')
   //initialised some dummy deta as the api was not working 
-  const [age, setage] = useState({ age: "34" })
-  const [gender, setgender] = useState({ gender: "male" })
-  const [countries, setcountries] = useState({
-    country: [{ country_id: "us" }, { country_id: "in" }]
-  })
+  const [age, setage] = useState()
+  const [gender, setgender] = useState()
+  const [countries, setcountries] = useState()
   const [isLoading, setisLoading] = useState(false)
 
   const predict = async (e) => {
+
     e.preventDefault()
+    if(name==''){
+      alert("enter your name")
+    return
+    }
     setisLoading(true)
     try {
       const [response1, response2, response3] = await Promise.all([
@@ -34,6 +37,7 @@ export default function Home() {
       console.log('Error fetching data:', error);
     }finally{
       setisLoading(false)
+ 
     }
 
   }
@@ -54,12 +58,12 @@ export default function Home() {
           </div> : 
           <>
                 <div className="first-row">
-                  <Age age={age} />
-                  <Gender gender={gender} />
+                 { age && <Age age={age} />}
+                 {gender && <Gender gender={gender} />}
                 </div>
                 <div className="second-row">
                   {countries?.country?.map((country, index) => (
-                    <Country key={index} country={country?.country_id} />
+                    <Country key={index} country={country?.country_id}  probability={country?.probability} />
                   ))}
                   {countries?.error ? <div className='card'>
                       <h4>  Country </h4>
